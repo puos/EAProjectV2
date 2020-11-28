@@ -16,9 +16,11 @@ public abstract class ActorAnim : ActorAnimBase
     [Serializable]
     public class PlayAnimParam : IPlayAnimParam
     {
+        public enum Type { Trigger , Integer }
         public string aniName;
-        public const int defaultValue = 10000;
-        public int value = defaultValue;
+        public Type type;
+        public int value;
+
         
         [HideInInspector] public int paramId;
 
@@ -71,8 +73,9 @@ public abstract class ActorAnim : ActorAnimBase
         {
             string aniName = ((PlayAnimParam)animParam[i]).aniName;
             int value      = ((PlayAnimParam)animParam[i]).value;
+            PlayAnimParam.Type type = ((PlayAnimParam)animParam[i]).type;
 
-            if (value == PlayAnimParam.defaultValue)
+            if (type == PlayAnimParam.Type.Trigger)
             {
                 m_anim.SetTrigger(((PlayAnimParam)animParam[i]).paramId);
                 aniTemp += "/" + aniName;
